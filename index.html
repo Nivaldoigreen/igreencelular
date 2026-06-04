@@ -257,6 +257,32 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
 .wpp svg{width:28px;height:28px;fill:white;}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 
+
+/* ── VIDEO CAROUSEL ── */
+.vid-carousel-wrap{position:relative;overflow:hidden;margin-top:40px;}
+.vid-carousel{display:flex;gap:16px;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform;}
+.vid-card{flex:0 0 calc(33.333% - 11px);border-radius:16px;overflow:hidden;border:1px solid var(--border);background:rgba(255,255,255,0.03);}
+@media(max-width:900px){.vid-card{flex:0 0 calc(50% - 8px);}}
+@media(max-width:600px){.vid-card{flex:0 0 90%;}}
+.vid-thumb{position:relative;aspect-ratio:16/9;cursor:pointer;overflow:hidden;}
+.vid-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.vid-thumb:hover img{transform:scale(1.04);}
+.vid-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);}
+.vid-play svg{width:52px;height:52px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5));}
+.vid-info{padding:14px 16px 16px;}
+.vid-title{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;margin-bottom:4px;}
+.vid-sub{font-size:12px;color:var(--gray);line-height:1.4;}
+.vid-modal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.88);align-items:center;justify-content:center;}
+.vid-modal.open{display:flex;}
+.vid-modal-inner{position:relative;width:90%;max-width:860px;aspect-ratio:16/9;}
+.vid-modal-inner iframe{width:100%;height:100%;border:none;border-radius:12px;}
+.vid-modal-close{position:absolute;top:-40px;right:0;background:none;border:none;color:#fff;font-size:28px;cursor:pointer;line-height:1;}
+.vid-nav{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:20px;}
+.vid-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);cursor:pointer;transition:all .2s;border:none;}
+.vid-dot.active{background:var(--g);width:24px;border-radius:4px;}
+.vid-arrow{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.vid-arrow:hover{background:rgba(29,185,84,0.15);border-color:var(--g);}
+
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .55s,transform .55s;}
 .reveal.vis{opacity:1;transform:none;}
@@ -272,7 +298,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
   <ul class="nav-links">
     <li><a href="#planos">Planos</a></li>
     <li><a href="#promocoes">Promoções</a></li>
-    <li><a href="#beneficios">Benefícios</a></li>
+    <li><a href="#depoimentos-video">Depoimentos</a></li><li><a href="#beneficios">Benefícios</a></li>
     <li><a href="#club">iGreen Club</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
@@ -321,7 +347,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
       <p class="sec-sub">O embaixador explica por que escolheu defender essa operadora.</p>
     </div>
     <div class="video-wrap reveal">
-      <iframe src="https://www.youtube.com/embed/anmPY2T5TrM?rel=0&start=6" title="Márcio Garcia iGreen Telecom" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <iframe src="https://www.youtube.com/embed/LS5QMg5IeT8?rel=0" title="Márcio Garcia iGreen Telecom" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
   </div>
 </section>
@@ -391,6 +417,107 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
     </div>
   </div>
 </section>
+
+
+<!-- CARROSSEL DEPOIMENTOS EM VÍDEO -->
+<section class="sec" id="depoimentos-video" style="background:rgba(5,10,5,0.7);border-top:1px solid rgba(29,185,84,0.08);border-bottom:1px solid rgba(29,185,84,0.08);">
+  <div class="sec-inner">
+    <div class="center reveal">
+      <div class="sec-label">📹 Depoimentos reais</div>
+      <h2 class="sec-title">Clientes usando o iGreen Club</h2>
+      <p class="sec-sub">Veja na prática como nossos clientes aproveitam os descontos e benefícios exclusivos do iGreen Club.</p>
+    </div>
+
+    <div class="vid-carousel-wrap reveal">
+      <div class="vid-carousel" id="vidCarousel">
+
+        <div class="vid-card">
+          <div class="vid-thumb" onclick="openVid('LIpUReV1TOY','85')">
+            <img src="https://img.youtube.com/vi/LIpUReV1TOY/mqdefault.jpg" alt="Depoimento iGreen Club" loading="lazy">
+            <div class="vid-play">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="40" fill="rgba(29,185,84,0.9)"/>
+                <path d="M32 26l24 14-24 14V26z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vid-info">
+            <div class="vid-title">Economia real no iGreen Club</div>
+            <div class="vid-sub">Cliente mostra como usa os descontos na prática</div>
+          </div>
+        </div>
+
+        <div class="vid-card">
+          <div class="vid-thumb" onclick="openVid('b6QIJYsbZcg','0')">
+            <img src="https://img.youtube.com/vi/b6QIJYsbZcg/mqdefault.jpg" alt="Depoimento iGreen Club" loading="lazy">
+            <div class="vid-play">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="40" fill="rgba(29,185,84,0.9)"/>
+                <path d="M32 26l24 14-24 14V26z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vid-info">
+            <div class="vid-title">Desconto na farmácia com iGreen</div>
+            <div class="vid-sub">Veja o cashback e benefícios na saúde</div>
+          </div>
+        </div>
+
+        <div class="vid-card">
+          <div class="vid-thumb" onclick="openVid('9er77ntLcao','0')">
+            <img src="https://img.youtube.com/vi/9er77ntLcao/mqdefault.jpg" alt="Depoimento iGreen Club" loading="lazy">
+            <div class="vid-play">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="40" fill="rgba(29,185,84,0.9)"/>
+                <path d="M32 26l24 14-24 14V26z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vid-info">
+            <div class="vid-title">iGreen Club no dia a dia</div>
+            <div class="vid-sub">Como aproveitar todos os benefícios do clube</div>
+          </div>
+        </div>
+
+        <div class="vid-card">
+          <div class="vid-thumb" onclick="openVid('aNiHtSx36s4','0')">
+            <img src="https://img.youtube.com/vi/aNiHtSx36s4/mqdefault.jpg" alt="Depoimento iGreen Club" loading="lazy">
+            <div class="vid-play">
+              <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="40" fill="rgba(29,185,84,0.9)"/>
+                <path d="M32 26l24 14-24 14V26z" fill="white"/>
+              </svg>
+            </div>
+          </div>
+          <div class="vid-info">
+            <div class="vid-title">Resultado real de quem usa iGreen</div>
+            <div class="vid-sub">Depoimento completo de cliente satisfeito</div>
+          </div>
+        </div>
+
+      </div><!-- /vid-carousel -->
+    </div><!-- /wrap -->
+
+    <!-- Navegação -->
+    <div class="vid-nav">
+      <button class="vid-arrow" onclick="moveCarousel(-1)">&#8592;</button>
+      <button class="vid-dot active" onclick="goToSlide(0)"></button>
+      <button class="vid-dot" onclick="goToSlide(1)"></button>
+      <button class="vid-dot" onclick="goToSlide(2)"></button>
+      <button class="vid-dot" onclick="goToSlide(3)"></button>
+      <button class="vid-arrow" onclick="moveCarousel(1)">&#8594;</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- Modal vídeo -->
+<div class="vid-modal" id="vidModal" onclick="closeVidModal(event)">
+  <div class="vid-modal-inner">
+    <button class="vid-modal-close" onclick="closeVid()">✕</button>
+    <iframe id="vidFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
 
 <!-- PLANOS -->
 <section class="sec" id="planos" style="background:radial-gradient(ellipse 100% 50% at 50% 100%,rgba(29,185,84,0.05) 0%,transparent 60%)">
@@ -532,7 +659,7 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
       <ul>
         <li><a href="#planos">Planos</a></li>
         <li><a href="#promocoes">Promoções</a></li>
-        <li><a href="#beneficios">Benefícios</a></li>
+        <li><a href="#depoimentos-video">Depoimentos</a></li><li><a href="#beneficios">Benefícios</a></li>
         <li><a href="#club">iGreen Club</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
@@ -559,6 +686,55 @@ function anim(el,t){let c=Math.floor(t*.75);const s=Math.ceil((t-c)/20);const i=
 anim(document.getElementById('oc'),247);
 setInterval(()=>{document.getElementById('oc').textContent=247+Math.floor(Math.random()*40)-20;},8000);
 function faq(btn){const a=btn.nextElementSibling;const open=btn.classList.contains('open');document.querySelectorAll('.faq-q').forEach(q=>{q.classList.remove('open');q.nextElementSibling.classList.remove('open');});if(!open){btn.classList.add('open');a.classList.add('open');}}
+
+// Carrossel de vídeos
+let carouselIdx = 0;
+const carouselEl = document.getElementById('vidCarousel');
+const dots = document.querySelectorAll('.vid-dot');
+
+function getVisibleCards(){
+  const w = window.innerWidth;
+  if(w >= 900) return 3;
+  if(w >= 600) return 2;
+  return 1;
+}
+
+function updateCarousel(){
+  const card = carouselEl.querySelector('.vid-card');
+  const cardW = card.offsetWidth + 16;
+  const maxIdx = 4 - getVisibleCards();
+  carouselIdx = Math.max(0, Math.min(carouselIdx, maxIdx));
+  carouselEl.style.transform = `translateX(-${carouselIdx * cardW}px)`;
+  dots.forEach((d,i) => d.classList.toggle('active', i === carouselIdx));
+}
+
+function moveCarousel(dir){
+  carouselIdx += dir;
+  updateCarousel();
+}
+
+function goToSlide(i){
+  carouselIdx = i;
+  updateCarousel();
+}
+
+window.addEventListener('resize', updateCarousel);
+
+// Modal de vídeo
+function openVid(id, start){
+  document.getElementById('vidFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1&start=${start}&rel=0`;
+  document.getElementById('vidModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeVid(){
+  document.getElementById('vidFrame').src = '';
+  document.getElementById('vidModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeVidModal(e){
+  if(e.target === document.getElementById('vidModal')) closeVid();
+}
+
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 </script>
