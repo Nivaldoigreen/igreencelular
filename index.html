@@ -412,8 +412,9 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
 <section class="hero">
   <div class="hero-text reveal">
     <div class="hero-badge">+600 mil clientes iGreen economizando</div>
-    <h1>A conexão de quem<br><span class="acc">faz acontecer.</span></h1>
-    <p class="hero-sub">Sem fidelidade. Com internet acumulativa, ligações ilimitadas e cobertura 5G nacional.</p>
+
+    <h1>Indique 20 amigos e<br><span class="acc">ZERE sua conta!</span></h1>
+    <p class="hero-sub">R$3,50 de cashback por cada indicação. Internet que acumula, ligações ilimitadas e sem fidelidade.</p>
     <div class="hero-btns">
       <a href="https://telecom.igreenenergy.com.br/?id=111880&autoConnection=true&chip=esim" class="btn-p" target="_blank" onclick="fbq('track','InitiateCheckout',{content_name:'Hero CTA iGreen'});">Ativar iGreen Agora →</a>
       <a href="#planos" class="btn-s">Ver planos</a>
@@ -729,6 +730,43 @@ footer{background:var(--dark);border-top:1px solid rgba(255,255,255,0.06);paddin
     </div>
   </div>
 </section>
+
+<!-- FORMULÁRIO RÁPIDO -->
+<section class="sec" id="contato" style="background:#0a150a;">
+  <div class="sec-inner" style="max-width:480px;margin:0 auto;">
+    <div class="center reveal" style="margin-bottom:28px;">
+      <div class="sec-label">Prefere receber uma ligação?</div>
+      <h2 class="sec-title" style="font-size:clamp(22px,4vw,32px);">Deixe seu contato e<br><span style="color:#1DB954;">te ligamos em minutos</span></h2>
+    </div>
+    <div id="form-rapido" style="background:#0d1f12;border-radius:16px;padding:28px;border:1px solid rgba(29,185,84,0.2);">
+      <div style="margin-bottom:14px;">
+        <input type="text" id="fr-nome" placeholder="Seu nome" maxlength="60"
+          style="width:100%;padding:13px 16px;border-radius:10px;border:1px solid #2e4a33;background:#152a1a;color:#fff;font-size:15px;box-sizing:border-box;font-family:inherit;">
+      </div>
+      <div style="margin-bottom:20px;">
+        <input type="tel" id="fr-tel" placeholder="WhatsApp com DDD (ex: 31 99999-0000)" maxlength="20"
+          style="width:100%;padding:13px 16px;border-radius:10px;border:1px solid #2e4a33;background:#152a1a;color:#fff;font-size:15px;box-sizing:border-box;font-family:inherit;">
+      </div>
+      <button onclick="enviarFormRapido()"
+        style="width:100%;padding:15px;border:none;border-radius:10px;background:#1DB954;color:#050a05;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;letter-spacing:0.3px;">
+        📲 Quero ser contactado
+      </button>
+      <p id="fr-msg" style="display:none;color:#1DB954;text-align:center;margin-top:14px;font-size:14px;font-weight:600;">✅ Enviado! Te ligaremos em breve.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+function enviarFormRapido() {
+  var nome = document.getElementById('fr-nome').value.trim();
+  var tel = document.getElementById('fr-tel').value.trim();
+  if (!nome || !tel) { alert('Por favor, preencha seu nome e WhatsApp.'); return; }
+  if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'FormRapido-Contato' });
+  var msg = 'Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20planos%20iGreen.%0ANome%3A%20' + encodeURIComponent(nome) + '%0AWhatsApp%3A%20' + encodeURIComponent(tel);
+  window.open('https://api.whatsapp.com/send?phone=5531920036713&text=' + msg, '_blank');
+  document.getElementById('fr-msg').style.display = 'block';
+}
+</script>
 
 <!-- BENEFÍCIOS -->
 <section class="sec" id="beneficios">
