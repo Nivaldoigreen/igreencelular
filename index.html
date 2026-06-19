@@ -727,6 +727,16 @@ function enviarFormRapido() {
   var tel = document.getElementById('fr-tel').value.trim();
   if (!nome || !tel) { alert('Por favor, preencha seu nome e WhatsApp.'); return; }
   if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'FormRapido-Contato' });
+
+  try {
+    fetch('https://script.google.com/macros/s/AKfycbyKOQ4NB73oGHjeFbIqNsgipt_5c4uacIGw6w1Q8dlHNkt6rUQy4oXCXGtflbsMCFp9zw/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({ nome: nome, telefone: tel, plano: '', tipo: 'FormRapido' })
+    });
+  } catch(err) { /* segue o fluxo mesmo se falhar */ }
+
   var msg = 'Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20planos%20iGreen.%0ANome%3A%20' + encodeURIComponent(nome) + '%0AWhatsApp%3A%20' + encodeURIComponent(tel);
   window.open('https://api.whatsapp.com/send?phone=5531920036713&text=' + msg, '_blank');
   document.getElementById('fr-msg').style.display = 'block';
@@ -979,6 +989,17 @@ window.enviarLeadPopup = function() {
   var tipo = window._leadTipo;
   var contentName = plano ? ('Plano' + plano + (tipo ? '-' + tipo.replace(' ','') : '')) : 'LeadPopup';
   if(typeof fbq === 'function') fbq('track', 'Lead', {content_name: contentName});
+
+  // Salva o lead na planilha Google Sheets (garante captura mesmo se não enviar WhatsApp)
+  try {
+    fetch('https://script.google.com/macros/s/AKfycbyKOQ4NB73oGHjeFbIqNsgipt_5c4uacIGw6w1Q8dlHNkt6rUQy4oXCXGtflbsMCFp9zw/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({ nome: nome, telefone: tel, plano: plano || '', tipo: tipo || '' })
+    });
+  } catch(err) { /* segue o fluxo mesmo se falhar */ }
+
   var msg = 'Oi!';
   if(plano) msg += ' Plano ' + plano;
   if(tipo) msg += ' - ' + tipo;
