@@ -980,6 +980,16 @@ window.selecionarTipo = function(tipo, btn) {
   btn.classList.add('active');
 };
 
+window.selecionarTipoPreset = function(tipo) {
+  window._leadTipo = tipo;
+  setTimeout(function() {
+    document.querySelectorAll('.lp-tipo button').forEach(function(b){
+      b.classList.remove('active');
+      if(b.textContent.indexOf(tipo) !== -1) b.classList.add('active');
+    });
+  }, 50);
+};
+
 window.enviarLeadPopup = function() {
   var nome = document.getElementById('lp-nome').value.trim();
   var tel = document.getElementById('lp-tel').value.trim();
@@ -1114,16 +1124,12 @@ document.addEventListener('click', function(e){
       <div class="ig-popup-item">🎁 Teste grátis por 30 dias — portabilidade Plano Start (voucher junho/2026)</div>
     </div>
     <div class="ig-popup-btns">
-      <a href="https://api.whatsapp.com/send?phone=5531920036713&text=Oi!%20Quero%20zerar%20minha%20conta%20com%20cashback%20%F0%9F%92%9A" 
-         class="ig-popup-btn-primary" target="_blank"
-         onclick="if(typeof fbq==='function')fbq('track','Lead',{content_name:'PopUp-ZerarConta'});igPopupClose();">
+      <button class="ig-popup-btn-primary" onclick="igPopupClose();abrirLeadPopup('Start');selecionarTipoPreset('Portabilidade');">
         💸 Quero zerar minha conta
-      </a>
-      <a href="https://api.whatsapp.com/send?phone=5531920036713&text=Oi!%20Quero%20testar%2030%20dias%20gr%C3%A1tis%20%F0%9F%8E%81" 
-         class="ig-popup-btn-secondary" target="_blank"
-         onclick="if(typeof fbq==='function')fbq('track','Lead',{content_name:'PopUp-TesteGratis'});igPopupClose();">
+      </button>
+      <button class="ig-popup-btn-secondary" onclick="igPopupClose();abrirLeadPopup('Start');selecionarTipoPreset('Portabilidade');">
         🎁 Quero testar 30 dias grátis
-      </a>
+      </button>
     </div>
     <div class="ig-popup-note">🎁 Teste grátis: portabilidade Plano Start · voucher gerado no app iGreen · válido junho/2026</div>
   </div>
