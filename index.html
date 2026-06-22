@@ -952,22 +952,45 @@ window._leadTipo = '';
 
 window.abrirLeadPopup = function(plano) {
   window._leadPlano = plano || '';
-  window._leadTipo = '';
   var overlay = document.getElementById('lead-popup-overlay');
-  var titulo = document.getElementById('lp-titulo-plano');
   var planoLabel = document.getElementById('lp-plano-label');
-  var nome = document.getElementById('lp-nome');
-  var tel = document.getElementById('lp-tel');
-  var msg = document.getElementById('lp-msg');
+  var titulo = document.getElementById('lp-titulo-plano');
+  var btnZap = document.getElementById('lp-btn-zap');
+
   if(planoLabel) planoLabel.textContent = plano ? 'Plano ' + plano : 'iGreen Telecom';
-  if(titulo) titulo.textContent = plano ? 'Como quer seu Plano ' + plano + '?' : 'Fale com a gente agora!';
-  if(nome) nome.value = '';
-  if(tel) tel.value = '';
-  if(msg) msg.style.display = 'none';
-  // reset botões tipo
-  document.querySelectorAll('.lp-tipo button').forEach(function(b){ b.classList.remove('active'); });
+  if(titulo) titulo.textContent = plano ? 'Como quer o Plano ' + plano + '?' : 'Como quer continuar?';
+
+  // Monta link WhatsApp com plano identificado
+  var msg = plano
+    ? 'Oi!%20Quero%20o%20Plano%20' + encodeURIComponent(plano) + '%20%F0%9F%93%B1'
+    : 'Oi!%20Quero%20saber%20mais%20sobre%20os%20planos%20iGreen%20%F0%9F%93%B1';
+  if(btnZap) btnZap.href = 'https://api.whatsapp.com/send?phone=5531920036713&text=' + msg;
+
   if(overlay){ overlay.classList.add('active'); document.body.style.overflow='hidden'; }
 };
+
+window.fecharLeadPopup = function() {
+  var overlay = document.getElementById('lead-popup-overlay');
+  if(overlay){ overlay.classList.remove('active'); document.body.style.overflow=''; }
+};
+
+window.registrarLeadZap = function() {
+  var plano = window._leadPlano || '';
+  if(typeof fbq==='function') fbq('track','Lead',{content_name: plano ? 'Plano'+plano+'-WhatsApp' : 'WhatsApp-Geral'});
+  setTimeout(window.fecharLeadPopup, 800);
+};
+
+window.registrarLeadCheckout = function() {
+  var plano = window._leadPlano || '';
+  if(typeof fbq==='function') fbq('track','Lead',{content_name: plano ? 'Plano'+plano+'-Checkout' : 'Checkout-Geral'});
+  setTimeout(window.fecharLeadPopup, 800);
+};
+
+// Fechar clicando fora
+document.addEventListener('DOMContentLoaded', function(){
+  var overlay = document.getElementById('lead-popup-overlay');
+  if(overlay) overlay.addEventListener('click', function(e){ if(e.target===this) window.fecharLeadPopup(); });
+});
 
 window.fecharLeadPopup = function() {
   var overlay = document.getElementById('lead-popup-overlay');
@@ -1068,6 +1091,7 @@ document.addEventListener('click', function(e){
     if(overlay) overlay.addEventListener('click', function(e){ if(e.target===this) window.igPopupClose(); });
   });
 
+  // Aparecer após 8 segundos
   // Aparecer após 15 segundos
   setTimeout(igPopupOpen, 15000);
 
@@ -1093,22 +1117,27 @@ document.addEventListener('click', function(e){
 
 </script>
 
-<!-- LEAD POPUP FORMULÁRIO -->
+<!-- LEAD POPUP 2 OPÇÕES -->
 <div id="lead-popup-overlay" role="dialog" aria-modal="true" aria-label="Contratar plano iGreen">
   <div id="lead-popup-box">
     <button class="lp-fechar" onclick="fecharLeadPopup()" aria-label="Fechar">✕</button>
     <div class="lp-plano" id="lp-plano-label">iGreen Telecom</div>
-    <div class="lp-titulo" id="lp-titulo-plano">Fale com a gente agora!</div>
-    <div class="lp-sub">Preencha abaixo e te chamamos no WhatsApp em minutos 📱</div>
-    <input type="text" id="lp-nome" placeholder="Seu nome" maxlength="60" autocomplete="name">
-    <input type="tel" id="lp-tel" placeholder="WhatsApp com DDD (ex: 31 99999-0000)" maxlength="20" autocomplete="tel">
-    <div class="lp-tipo">
-      <button onclick="selecionarTipo('Portabilidade', this)">📲 Portabilidade<br><small style="font-weight:400;font-size:10px;">+5GB grátis</small></button>
-      <button onclick="selecionarTipo('Linha Nova', this)">✨ Linha Nova</button>
-    </div>
-    <button class="lp-btn-enviar" onclick="enviarLeadPopup()">Falar no WhatsApp →</button>
-    <p id="lp-msg" style="display:none;color:#1DB954;text-align:center;margin-top:12px;font-size:14px;font-weight:600;">✅ Abrindo WhatsApp...</p>
-    <div class="lp-nota">Atendimento rápido · Sem compromisso</div>
+    <div class="lp-titulo" id="lp-titulo-plano">Como quer continuar?</div>
+    <div class="lp-sub">Escolha a melhor forma para você 👇</div>
+
+    <a id="lp-btn-zap" href="#" target="_blank"
+       onclick="registrarLeadZap()"
+       style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;border-radius:10px;background:#25D366;color:#fff;font-size:16px;font-weight:700;text-decoration:none;margin-bottom:12px;box-sizing:border-box;">
+      💬 Falar no WhatsApp
+    </a>
+
+    <a id="lp-btn-checkout" href="https://telecom.igreenenergy.com.br/?id=111880&autoConnection=true&chip=esim" target="_blank"
+       onclick="registrarLeadCheckout()"
+       style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;border-radius:10px;background:#1DB954;color:#050a05;font-size:16px;font-weight:700;text-decoration:none;box-sizing:border-box;">
+      ⚡ Ativar agora — faço sozinho!
+    </a>
+
+    <div class="lp-nota" style="margin-top:14px;">Sem fidelidade · Ative hoje pelo eSIM ou receba o chip em casa</div>
   </div>
 </div>
 
